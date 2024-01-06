@@ -16,7 +16,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from ai.views import ChatView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/ai', ChatView.as_view(), name='ai'),
 ]
