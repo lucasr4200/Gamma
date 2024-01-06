@@ -24,9 +24,14 @@ class ChatView(APIView):
             messages=[
                 {
                     "role": "user",
-                    "content": message,
+                    "content": "",
                 }
             ],
             model="gpt-3.5-turbo",
+            temperature=0,
+            max_tokens=1000,
+            top_p=1,
+            frequency_penalty=0,
+            presence_penalty=0,
         )
         return Response(chat_completion)

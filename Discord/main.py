@@ -2,7 +2,10 @@ import discord
 import os
 import requests
 
+
 client = discord.Client(intents=discord.Intents.all())
+
+open_ai_key = os.environ.get('OPENAI_API_KEY')
 
 @client.event
 async def on_ready():
@@ -17,9 +20,9 @@ async def on_message(message):
             'user': str(message.author),
             'timestamp': str(message.created_at),
             'channel': str(message.channel)}
-    response = requests.post('http://localhost:8000/ai/', data=data)
 
-
+    headers = {'Content-type': 'application/json'}
+    response = requests.post('http://127.0.0.1:8000/api/ai', json=data, headers=headers)
 
     await message.channel.send(message.content)
 
