@@ -3,9 +3,14 @@ import json
 from rest_framework.response import Response
 from openai import OpenAI
 import os
-from __init__ import client
+#from __init__ import client
 
 # Create your views here.
+
+client = OpenAI(
+    # This is the default and can be omitted
+    api_key='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',
+)
 
 class ChatView(APIView):
 

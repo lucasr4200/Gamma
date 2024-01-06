@@ -20,5 +20,5 @@ from ai.views import ChatView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/ai', ChatView, name='ai'),
+    path('api/ai', ChatView.as_view(), name='ai'),
 ]
