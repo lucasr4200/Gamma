@@ -13,4 +13,4 @@ async def on_message(message):
 
     await message.channel.send(message.content)
 
-client.run('your-bot-token')
+client.run('MTE5MzI0OTYwNjAyMTE1NzAwNA.GT3PY-.iPFBRgNSkU9caLpQ6GIPy5zVmaDrmHAyLrEwIY')
