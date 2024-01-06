@@ -23,8 +23,8 @@ class ChatView(APIView):
         chat_completion = client.chat.completions.create(
             messages=[
                 {
-                    "role": "user",
-                    "content": "",
+                    "role": "system",
+                    "content": "You are an AI that flags content based on tags like \"Harmful Content\" \"Potentially Unsafe\" \"Misleading\" \"Potentially Misleading\" \"Discriminatory\" \"Promoting Self Harm\" \"Hate Speech\" \"Mean Spirited\".  Return results as {\"tags\":[tags], , \"AI Comment\":ai_comment} "
                 }
             ],
             model="gpt-3.5-turbo",
