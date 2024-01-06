@@ -3,13 +3,16 @@ import json
 from rest_framework.response import Response
 from openai import OpenAI
 import os
+from dotenv import load_dotenv
+load_dotenv()
 #from __init__ import client
 
 # Create your views here.
-
+token = os.environ.get('OPENAI_API_KEY')
+print(token)
 client = OpenAI(
     # This is the default and can be omitted
-    api_key='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',
+    api_key= token,
 )
 
 class ChatView(APIView):
