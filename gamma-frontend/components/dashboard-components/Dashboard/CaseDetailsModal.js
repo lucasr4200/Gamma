@@ -109,8 +109,8 @@ export default function CaseDetailsModal(props) {
                                                 }}
                                             >
                                                 <img
-                                                    src="https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
-                                                    srcSet="https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+                                                    src="https://scontent.fyxd3-1.fna.fbcdn.net/v/t39.30808-6/314012946_5776686345732381_1278809893833372774_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=efb6e6&_nc_ohc=n6GA94HAr7cAX_WpVnX&_nc_ht=scontent.fyxd3-1.fna&oh=00_AfDCndXpKK7GIQH_QT2aNBhB7Q1WAKe6e0oGr-t3c1Lh4w&oe=65A05CEA"
+                                                    srcSet="https://scontent.fyxd3-1.fna.fbcdn.net/v/t39.30808-6/314012946_5776686345732381_1278809893833372774_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=efb6e6&_nc_ohc=n6GA94HAr7cAX_WpVnX&_nc_ht=scontent.fyxd3-1.fna&oh=00_AfDCndXpKK7GIQH_QT2aNBhB7Q1WAKe6e0oGr-t3c1Lh4w&oe=65A05CEA"
                                                     loading="lazy"
                                                     alt=""
                                                 />

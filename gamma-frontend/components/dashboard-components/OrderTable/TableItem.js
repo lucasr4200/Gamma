@@ -1,7 +1,7 @@
 import * as React from "react";
 import Avatar from "@mui/joy/Avatar";
 import Box from "@mui/joy/Box";
-
+import AspectRatio from "@mui/joy/AspectRatio";
 import Link from "next/link";
 import Stack from "@mui/joy/Stack";
 import Typography from "@mui/joy/Typography";
@@ -57,7 +57,11 @@ export default function TableItem({row, selected, setSelected, data}) {
                         alignItems: "center",
                     }}
                 >
-                    <Avatar size="sm"></Avatar>
+                    <Avatar
+                        size="sm"
+                        variant="outlined"
+                        src="https://scontent.fyxd3-1.fna.fbcdn.net/v/t39.30808-6/314012946_5776686345732381_1278809893833372774_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=efb6e6&_nc_ohc=n6GA94HAr7cAX_WpVnX&_nc_ht=scontent.fyxd3-1.fna&oh=00_AfDCndXpKK7GIQH_QT2aNBhB7Q1WAKe6e0oGr-t3c1Lh4w&oe=65A05CEA"
+                    ></Avatar>
                     <div>
                         <Typography level="body-xs">{data.offender}</Typography>
                         <Typography level="body-xs">{data.platform}</Typography>

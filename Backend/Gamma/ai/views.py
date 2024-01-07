@@ -15,7 +15,7 @@ token = os.environ.get('OPENAI_API_KEY')
 # print(token)
 client = OpenAI(
     # This is the default and can be omitted
-    api_key= "",
+    api_key= "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",
 )
 
 class ChatView(APIView):

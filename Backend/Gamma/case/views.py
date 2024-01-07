@@ -28,7 +28,6 @@ class CasesView(APIView):
 
         response = json.dumps(response)
 
-        print(response)
         return Response(response, status=200)
     
     def post(self, request):
@@ -43,7 +42,17 @@ class CasesView(APIView):
         return Response(json.dumps(case.data), status=201)
     
 
+    
+    def options(self, request):# FUCK CORS OH MY GOOD GOOD CRIMONEY JESUS
+        response = Response()
+        response['Access-Control-Allow-Origin'] = 'http://174.3.244.48:3000'
+        response["Access-Control-Allow-Methods"] = "GET, POST, PUT, PATCH, DELETE, OPTIONS"
 
+        response['Access-Control-Allow-Headers'] = "Origin, X-Requested-With, Content-Type"
+        response.status_code = 200
+        return response
+
+    
 
     def patch(self, request):
         
@@ -70,8 +79,15 @@ class CasesView(APIView):
         # Save the changes to the database
         case.save()
 
-        # Return a success response
-        return Response({"message": "Case status updated successfully"}, status=200)
+        # Create a response with the success message
+        response = Response("Case status updated successfully",status=200 )
+
+        # Add CORS headers to allow requests from any host
+        response["Access-Control-Allow-Origin"] = "http://174.3.244.48:3000"
+        response["Access-Control-Allow-Methods"] = "GET, POST, PUT, PATCH, DELETE, OPTIONS"
+        response["Access-Control-Allow-Headers"] = "Origin, X-Requested-With, Content-Type"
+
+        return response
                 
     
 

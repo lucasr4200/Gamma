@@ -122,9 +122,7 @@ export default function Login() {
                             >
                                 <BadgeRoundedIcon />
                             </IconButton>
-                            <Typography level="title-lg">
-                                Company logo
-                            </Typography>
+                            <Typography level="title-lg">Gamma</Typography>
                         </Box>
                         <ColorSchemeToggle />
                     </Box>
@@ -154,24 +152,9 @@ export default function Login() {
                         <Stack gap={4} sx={{mb: 2}}>
                             <Stack gap={1}>
                                 <Typography level="h3">Sign in</Typography>
-                                <Typography level="body-sm">
-                                    New to company?{" "}
-                                    <Link
-                                        href="#replace-with-a-link"
-                                        level="title-sm"
-                                    >
-                                        Sign up!
-                                    </Link>
-                                </Typography>
+                                <Divider sx={{width: 100}} />
                             </Stack>
-                            <Button
-                                variant="soft"
-                                color="neutral"
-                                fullWidth
-                                startDecorator={<GoogleIcon />}
-                            >
-                                Continue with Google
-                            </Button>
+
                             <Button
                                 variant="soft"
                                 color="neutral"
