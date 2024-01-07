@@ -260,28 +260,37 @@ export default function CaseDetailsModal(props) {
                                         </Stack>
                                     </Stack>
                                     <Divider />
+
                                     <Stack spacing={0}>
                                         <CaseDetailsCard
                                             title={"Flagged Content"}
                                             content={caseObject.message}
                                         />
                                     </Stack>
-                                    <Stack spacing={0}>
-                                        {caseObject.context && (
+                                    {caseObject.context ? (
+                                        <Stack spacing={0}>
                                             <CaseDetailsCard
                                                 title={
                                                     "Context - Content is a reply"
                                                 }
                                                 content={caseObject.context}
                                             />
-                                        )}
-                                    </Stack>
+                                        </Stack>
+                                    ) : (
+                                        <Stack spacing={0}>
+                                            <CaseDetailsCard
+                                                title={"Context"}
+                                                content="No Context Available"
+                                            />
+                                        </Stack>
+                                    )}
                                     <Stack spacing={0}>
                                         <CaseDetailsCard
                                             title={"AI Comment"}
                                             content={caseObject.ai_comment}
                                         />
                                     </Stack>
+
                                     <div>
                                         <CaseDetailsCard>
                                             <Stack spacing={1}>

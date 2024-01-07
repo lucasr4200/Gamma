@@ -30,7 +30,7 @@ async def on_message(message):
                 sender = message.author
                 print("Handling ", message_content, " from ", sender)
                 messagehandler.handle_message(message_content, sender, message.jump_url, previous_message_content)
-             
+                
                 return
     else:
         message_content = message.content
@@ -41,4 +41,4 @@ async def on_message(message):
 
 
 # token = os.environ['DISCORD_TOKEN']
-client.run("MTE5MzU0MTA0ODIwNzY3OTU5OA.GNwALm.qMNvJM3bvSgA-FIU6IZOGlRF9LSQwD6pyn_qzo")
+client.run("MTE5MzU0MTA0ODIwNzY3OTU5OA.GxrEHM.q6ClJf3YK4ltI3cXJfN9SvoHU1H7QzH2b2E0Ws")
