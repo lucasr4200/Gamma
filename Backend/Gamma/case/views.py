@@ -26,6 +26,8 @@ class CasesView(APIView):
         #print(response)
 
         response = json.dumps(response)
+
+        print(response)
         return Response(response, status=200)
     
     def post(self, request):

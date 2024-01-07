@@ -7,14 +7,15 @@ from dotenv import load_dotenv
 load_dotenv()
 import requests
 from case.models import Case
+import datetime
 #from __init__ import client
 
 # Create your views here.
-# token = os.environ.get('OPENAI_API_KEY')
+token = os.environ.get('OPENAI_API_KEY')
 # print(token)
 client = OpenAI(
     # This is the default and can be omitted
-    api_key= "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",
+    api_key= token,
 )
 
 class ChatView(APIView):
@@ -23,7 +24,6 @@ class ChatView(APIView):
         data = json.loads(request.body)
         message = data['message']  # String
         user = data['user']  # String
-        timestamp = data['timestamp']   # need to convert to datetime object
         source = data['source']     # String
         platform = data['platform']    # String
         try:
@@ -50,7 +50,8 @@ class ChatView(APIView):
 
             # Save case object to db
             caseobject = Case.objects.create(
-                date=timestamp,
+                
+                date=datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
                 status="Unreviewed",
                 platform=platform,
                 offender=user,
