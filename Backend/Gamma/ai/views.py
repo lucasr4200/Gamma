@@ -20,11 +20,11 @@ class ChatView(APIView):
 
     def post(self, request):
         data = json.loads(request.body)
-        message = data['message']
-        user = data['user']
-        timestamp = data['timestamp']
-        source = data['source']
-        platform = data['platform']
+        message = data['message']  # String
+        user = data['user']  # String
+        timestamp = data['timestamp']   # need to convert to datetime object
+        source = data['source']     # String
+        platform = data['platform']    # String
         try:
             chat_completion = client.chat.completions.create(
                 messages=[
@@ -46,6 +46,12 @@ class ChatView(APIView):
             )
             response_messages = chat_completion.choices[0].message.content
             # print(response_messages)
+
+            # Save case object to db
+
+
+            #finally return response
+
             return Response({"message":response_messages})
 
         except Exception as e:
