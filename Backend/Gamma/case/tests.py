@@ -69,7 +69,7 @@ class CaseTest(APITestCase):
         url = reverse('cases')
         response = self.client.get(url, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        #print(response.data)
+        print(response.data)
         # Add additional assertions as needed
 
     def test_get_case(self):

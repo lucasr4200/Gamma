@@ -4,6 +4,7 @@ from .models import Case
 import json
 from .serializer import CaseSerializer
 from rest_framework.response import Response
+from django.db.models import Q
 # Create your views here.
 
 class CasesView(APIView):
@@ -11,10 +12,20 @@ class CasesView(APIView):
 
         # TODO: search and filter features
 
-        cases = Case.objects.all()        
-        response = CaseSerializer(cases, many=True).data
+        response = {}
+
+        cases = Case.objects.all() 
+
+        num_open_cases = Case.objects.filter(Q(status='Unreviewed') | Q(status='Further Action Needed')).count()
+
+        response['totalPendingCases'] = num_open_cases
+        response['totalCases'] = len(cases)
+        response['cases'] = CaseSerializer(cases, many=True).data
+       
+        
         #print(response)
 
+        response = json.dumps(response)
         return Response(response, status=200)
     
     def post(self, request):
