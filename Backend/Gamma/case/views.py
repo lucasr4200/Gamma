@@ -47,7 +47,6 @@ class CasesView(APIView):
         response = Response()
         response['Access-Control-Allow-Origin'] = 'http://174.3.244.48:3000'
         response["Access-Control-Allow-Methods"] = "GET, POST, PUT, PATCH, DELETE, OPTIONS"
-
         response['Access-Control-Allow-Headers'] = "Origin, X-Requested-With, Content-Type"
         response.status_code = 200
         return response

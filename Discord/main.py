@@ -1,57 +1,44 @@
-import discord
 import os
-import requests
+
+import discord
+import messagehandler
 import json
 
-client = discord.Client(intents=discord.Intents.all())
+intents = discord.Intents.default()
+intents.message_content = True
+client = discord.Client(intents=intents)
 
-open_ai_key = os.environ.get('OPENAI_API_KEY')
 
 @client.event
 async def on_ready():
     print(f'We have logged in as {client.user}')
+
 
 @client.event
 async def on_message(message):
     if message.author == client.user:
         return
 
-    data = {'message': message.content,
-            'user': str(message.author),
-            'source': message.jump_url,
-            'platform': 'discord'}
+    if message.reference is not None: 
+        if message.reference.message_id is not None:
+            replied_message = await message.channel.fetch_message(message.reference.message_id)
+                #If the message was replying to somebody
 
-    print(data)
-
-    headers = {'Content-type': 'application/json'}
-    response = requests.post('http://192.168.1.242:8000/api/ai', json=data, headers=headers)
-
-    #http://127.0.0.1:8000/api/ai used for local host
-
-    tagsList = []
-    for i in json.loads(response.json()['message'])['tags']:
-        tagsList.append(i)
-    print("tagsList:", tagsList)
-
-
-    # tagsList.append(json.loads(response.json()['message'])['AI Comment'])
-
-    aiCommentList = []
-    aiCommentList.append(json.loads(response.json()['message'])['AI Comment'])
+            if replied_message.author == client.user:
+                previous_message_content = replied_message.content
+                message_content = message.content
+                sender = message.author
+                print("Handling ", message_content, " from ", sender)
+                messagehandler.handle_message(message_content, sender, message.jump_url, previous_message_content)
+             
+                return
+    else:
+        message_content = message.content
+        sender = message.author
+        print("Handling ", message_content, " from ", sender)
+        messagehandler.handle_message(message_content, sender, jump_url=message.jump_url)
 
 
-    dataList = []
-    dataList.append(tagsList)
-    dataList.append(aiCommentList)
 
-    for i in data:
-        dataList.append(data[i])
-
-    print("dataList:", dataList)
-
-    await message.channel.send(json.loads(response.json()['message'])['tags'])
-
-token = os.environ.get('DISCORD_TOKEN')
-client.run(token)
-
-
+# token = os.environ['DISCORD_TOKEN']
+client.run("MTE5MzU0MTA0ODIwNzY3OTU5OA.GNwALm.qMNvJM3bvSgA-FIU6IZOGlRF9LSQwD6pyn_qzo")
