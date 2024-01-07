@@ -232,7 +232,7 @@ export default function CaseDetailsModal(props) {
                                                     </Typography>
                                                 </Button>
                                             </a>
-                                            <Dropdown>
+                                            {/* <Dropdown>
                                                 {caseObject.status.toLowerCase() !==
                                                     "resolved" && (
                                                     <MenuButton
@@ -256,7 +256,7 @@ export default function CaseDetailsModal(props) {
                                                         Ban User
                                                     </MenuItem>
                                                 </Menu>
-                                            </Dropdown>
+                                            </Dropdown> */}
                                         </Stack>
                                     </Stack>
                                     <Divider />

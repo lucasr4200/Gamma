@@ -2,7 +2,7 @@ import * as React from "react";
 import Snackbar from "@mui/joy/Snackbar";
 import {Typography} from "@mui/joy";
 
-export default function SuccessSnackbar({open, setOpen}) {
+export default function SuccessSnackbar({open, setOpen, contentOverride}) {
     return (
         <Snackbar
             autoHideDuration={2000}

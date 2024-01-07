@@ -43,7 +43,7 @@ class CasesView(APIView):
     
 
     
-    def options(self, request):# FUCK CORS OH MY GOOD GOOD CRIMONEY JESUS
+    def options(self, request):# FUCK CORS OH MY GOOD GOD CRIMONEY JESUS
         response = Response()
         response['Access-Control-Allow-Origin'] = 'http://174.3.244.48:3000'
         response["Access-Control-Allow-Methods"] = "GET, POST, PUT, PATCH, DELETE, OPTIONS"

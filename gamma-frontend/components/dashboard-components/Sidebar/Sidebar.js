@@ -118,10 +118,12 @@ export default function Sidebar() {
                     onClick={() => closeSidebar()}
                 />
                 <Box sx={{display: "flex", gap: 1, alignItems: "center"}}>
-                    <IconButton variant="soft" color="primary" size="sm">
-                        <VisibilityIcon />
-                    </IconButton>
-                    <Typography level="title-lg">Gamma</Typography>
+                    <Avatar
+                        size="md"
+                        src="https://i.gyazo.com/4899bbc7df39865ea59c3ac1127d52d3.png"
+                    />
+
+                    <Typography level="title-lg">Gamma AI</Typography>
                     <ColorSchemeToggle sx={{ml: "auto"}} />
                 </Box>
                 <ListDivider />

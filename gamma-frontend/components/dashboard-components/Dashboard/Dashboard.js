@@ -21,7 +21,7 @@ export default function Dashboard({data}) {
             <SuccessSnackbar open={snackbarOpen} setOpen={setSnackbarOpen} />
             <CaseDetailsModal data={data} setSnackbarOpen={setSnackbarOpen} />
             <DashboardBreadcrumbs />
-            <DashboardHeader />
+            <DashboardHeader setSnackbarOpen={setSnackbarOpen} />
             <OrderTable data={data} />
         </Box>
     );
