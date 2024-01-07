@@ -11,7 +11,10 @@ import SearchIcon from "@mui/icons-material/Search";
 
 import Filters from "./Filters";
 import SearchAndSortMobile from "./SearchAndSortMobile";
-export default function SearchAndSort() {
+export default function SearchAndSort({search, onSearchChange, setCurrentPage}) {
+    function handleSearchChange(event) {
+        onSearchChange(event.target.value);
+    }
     return (
         <>
             <SearchAndSortMobile />
@@ -33,10 +36,12 @@ export default function SearchAndSort() {
                     <Input
                         size="sm"
                         placeholder="Search"
+                        value={search}
+                        onChange={handleSearchChange}
                         startDecorator={<SearchIcon />}
                     />
                 </FormControl>
-                <Filters />
+                <Filters setCurrentPage={setCurrentPage}/>
             </Box>
         </>
     );

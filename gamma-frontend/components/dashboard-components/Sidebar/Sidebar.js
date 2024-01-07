@@ -61,7 +61,7 @@ function Toggler({defaultExpanded = false, renderToggle, children}) {
 
 export default function Sidebar() {
     const path = usePathname();
-    console.log(path);
+
     return (
         <>
             <SidebarHeader />

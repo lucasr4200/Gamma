@@ -9,15 +9,16 @@ import CaseDetailsModal from "../components/dashboard-components/Dashboard/CaseD
 
 import {Box, CssBaseline} from "@mui/joy";
 
-export default function index() {
+export default function index(props) {
     const {data: session} = useSession();
     const router = useRouter();
+    const data = props.data;
 
     if (session) {
         return (
-            <Box sx={{display: "flex", minHeight: "100dvh"}}>
+            <Box sx={{display: "flex", minHeight: "100vh"}}>
                 <Sidebar />
-                <Dashboard />
+                <Dashboard data={data} />
             </Box>
         );
     } else {
@@ -27,4 +28,22 @@ export default function index() {
             </>
         );
     }
+}
+export async function getServerSideProps(context) {
+    var requestOptions = {
+        method: "GET",
+        redirect: "follow",
+    };
+
+    const response = await fetch(
+        "http://0.0.0.0:8000/api/cases",
+        requestOptions,
+    );
+    const resData = await response.text();
+    const resJSON = JSON.parse(JSON.parse(resData));
+    return {
+        props: {
+            data: resJSON,
+        },
+    };
 }

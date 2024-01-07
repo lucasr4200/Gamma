@@ -12,13 +12,17 @@ import DashboardHeader from "./DashboardHeader";
 import DashboardBreadcrumbs from "./DashboardBreadcrumbs";
 import {useRouter} from "next/router";
 import CaseDetailsModal from "./CaseDetailsModal";
-export default function Dashboard() {
+import SuccessSnackbar from "./SuccessSnackbar";
+export default function Dashboard({data}) {
+    const [snackbarOpen, setSnackbarOpen] = React.useState(false);
+
     return (
         <Box component="main" className="MainContent" sx={styles.box}>
-            <CaseDetailsModal />
+            <SuccessSnackbar open={snackbarOpen} setOpen={setSnackbarOpen} />
+            <CaseDetailsModal data={data} setSnackbarOpen={setSnackbarOpen} />
             <DashboardBreadcrumbs />
             <DashboardHeader />
-            <OrderTable />
+            <OrderTable data={data} />
         </Box>
     );
 }

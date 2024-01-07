@@ -13,7 +13,7 @@ import requests
 # print(token)
 client = OpenAI(
     # This is the default and can be omitted
-    api_key= "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",
+    api_key= "",
 )
 
 class ChatView(APIView):

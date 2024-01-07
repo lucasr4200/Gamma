@@ -17,9 +17,7 @@ export default function DashboardBreadcrumbs() {
                 separator={<ChevronRightRoundedIcon fontSize="sm" />}
                 sx={{pl: 0}}
             >
-                <Link underline="none" color="neutral" aria-label="Home">
-                    <HomeRoundedIcon />
-                </Link>
+                <Link underline="none" color="neutral" aria-label="Home"></Link>
                 <Link
                     underline="hover"
                     color="neutral"

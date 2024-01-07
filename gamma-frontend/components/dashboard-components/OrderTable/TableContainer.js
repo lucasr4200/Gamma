@@ -7,7 +7,7 @@ export default function TableContainer({children}) {
         <Sheet
             className="OrderTableContainer"
             variant="outlined"
-            sx={styles.table}
+            sx={{...styles.table, maxHeight: "75vh"}}
         >
             {children}
         </Sheet>

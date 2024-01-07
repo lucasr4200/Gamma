@@ -5,6 +5,7 @@ import json
 from .serializer import CaseSerializer
 from rest_framework.response import Response
 from django.db.models import Q
+
 # Create your views here.
 
 class CasesView(APIView):
@@ -38,6 +39,37 @@ class CasesView(APIView):
             return Response(json.dumps(case.errors), status=400)
         
         return Response(json.dumps(case.data), status=201)
+    
+
+
+
+    def patch(self, request):
+        
+        # Parse the request data
+        data = request.data
+
+        # Get the case id and action from the request data
+        case_id = data.get('caseId')
+        action = data.get('action')
+
+        # Get the case object with the given id
+        case = Case.objects.get(case_id=case_id)
+        
+        # Update the case status based on the action
+        if action == 'escalate':
+            case.status = 'Further Action Needed'
+        elif action == 'resolve':
+            case.status = 'Resolved'
+        elif action =="unreview":
+            case.status = 'Unreviewed'
+        else:
+            return Response({"error": "Invalid action"}, status=400)
+
+        # Save the changes to the database
+        case.save()
+
+        # Return a success response
+        return Response({"message": "Case status updated successfully"}, status=200)
                 
     
 

@@ -7,13 +7,7 @@ import Checkbox from "@mui/joy/Checkbox";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import {Box} from "@mui/joy";
 
-export default function TableHeader({
-    selected,
-    setSelected,
-    rows,
-    order,
-    setOrder,
-}) {
+export default function TableHeader({order, setOrder}) {
     return (
         <thead>
             <tr>
@@ -51,8 +45,8 @@ export default function TableHeader({
                 </th>
                 <th style={{width: 140, padding: "12px 6px"}}>Date</th>
                 <th style={{width: 140, padding: "12px 6px"}}>Status</th>
-                <th style={{width: 240, padding: "12px 6px"}}>Customer</th>
-                <th style={{width: 140, padding: "12px 6px"}}> </th>
+                <th style={{width: 240, padding: "12px 6px"}}>Offender</th>
+                <th style={{width: 140, padding: "12px 6px"}}></th>
             </tr>
         </thead>
     );

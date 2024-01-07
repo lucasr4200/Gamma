@@ -1,9 +1,9 @@
 import * as React from "react";
 
 import Chip from "@mui/joy/Chip";
-
+import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import CheckRoundedIcon from "@mui/icons-material/CheckRounded";
-import BlockIcon from "@mui/icons-material/Block";
+
 import AutorenewRoundedIcon from "@mui/icons-material/AutorenewRounded";
 
 export default function StatusChip({status}) {
@@ -15,7 +15,7 @@ export default function StatusChip({status}) {
                 {
                     Resolved: <CheckRoundedIcon />,
                     Unreviewed: <AutorenewRoundedIcon />,
-                    "Further Action Needed": <BlockIcon />,
+                    "Further Action Needed": <ErrorOutlineIcon />,
                 }[status]
             }
             color={

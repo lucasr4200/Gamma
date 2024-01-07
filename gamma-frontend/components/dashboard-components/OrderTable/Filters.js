@@ -4,8 +4,45 @@ import FormLabel from "@mui/joy/FormLabel";
 import Select from "@mui/joy/Select";
 import Option from "@mui/joy/Option";
 import {LogoDiscord, LogoReddit, LogoTwitter} from "react-ionicons";
+import {useRouter} from "next/router";
 
-export default function Filters() {
+export default function Filters({setCurrentPage}) {
+    const router = useRouter();
+
+    React.useEffect(() => {
+        router.push(
+            {
+                query: {statusFilter: "all", platformFilter: "all"},
+            },
+            "/",
+        );
+    }, []);
+
+    function handlePlatformFilterChange(event, newValue) {
+        setCurrentPage(1);
+        router.push(
+            {
+                query: {
+                    statusFilter: router.query.statusFilter,
+                    platformFilter: newValue,
+                },
+            },
+            "/",
+        );
+    }
+    function handleStatusFilterChange(event, newValue) {
+        setCurrentPage(1);
+        router.push(
+            {
+                query: {
+                    statusFilter: newValue,
+                    platformFilter: router.query.platformFilter,
+                },
+            },
+            "/",
+        );
+    }
+
     return (
         <React.Fragment>
             <FormControl size="sm">
@@ -14,6 +51,7 @@ export default function Filters() {
                     size="sm"
                     placeholder="Filter by status"
                     slotProps={{button: {sx: {whiteSpace: "nowrap"}}}}
+                    onChange={handleStatusFilterChange}
                 >
                     <Option value="all">All</Option>
                     <Option value="resolved">Resolved</Option>
@@ -25,7 +63,11 @@ export default function Filters() {
             </FormControl>
             <FormControl size="sm">
                 <FormLabel>Platform</FormLabel>
-                <Select size="sm" placeholder="All">
+                <Select
+                    size="sm"
+                    placeholder="All"
+                    onChange={handlePlatformFilterChange}
+                >
                     <Option value="all">All</Option>
                     <Option value="Discord">
                         Discord

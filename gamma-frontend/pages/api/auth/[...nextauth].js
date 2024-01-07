@@ -1,6 +1,7 @@
 import NextAuth from "next-auth";
 import Discord from "next-auth/providers/discord";
 import GithubProvider from "next-auth/providers/github";
+import {getServerSession} from "next-auth";
 
 import DiscordProvider from "next-auth/providers/discord";
 
@@ -21,3 +22,5 @@ export const authOptions = {
 };
 
 export default NextAuth(authOptions);
+
+

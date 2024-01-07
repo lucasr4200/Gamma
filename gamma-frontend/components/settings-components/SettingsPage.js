@@ -37,7 +37,7 @@ import EditorToolbar from "./EditorToolbar";
 
 export default function MyProfile() {
     return (
-        <Box sx={{flex: 1, width: "100%"}}>
+        <Box sx={{flex: 1, width: "60%"}}>
             <Box
                 sx={{
                     position: "sticky",
@@ -58,9 +58,7 @@ export default function MyProfile() {
                             underline="none"
                             color="neutral"
                             aria-label="Home"
-                        >
-                            <HomeRoundedIcon />
-                        </Link>
+                        ></Link>
 
                         <Typography
                             color="primary"
@@ -106,7 +104,7 @@ export default function MyProfile() {
                             indicatorInset
                             value={0}
                         >
-                            Panel Settings
+                            Profile Settings
                         </Tab>
                         <Tab
                             sx={{borderRadius: "6px 6px 0 0"}}
@@ -114,20 +112,6 @@ export default function MyProfile() {
                             value={1}
                         >
                             Server Settings
-                        </Tab>
-                        <Tab
-                            sx={{borderRadius: "6px 6px 0 0"}}
-                            indicatorInset
-                            value={2}
-                        >
-                            Plan
-                        </Tab>
-                        <Tab
-                            sx={{borderRadius: "6px 6px 0 0"}}
-                            indicatorInset
-                            value={3}
-                        >
-                            Billing
                         </Tab>
                     </TabList>
                 </Tabs>

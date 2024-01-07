@@ -1,6 +1,12 @@
 import {useRouter} from "next/router";
 import Modal from "@mui/joy/Modal";
-import {ModalDialog, Typography, ModalClose, Divider} from "@mui/joy";
+import {
+    ModalDialog,
+    Typography,
+    ModalClose,
+    Divider,
+    useColorScheme,
+} from "@mui/joy";
 
 import * as React from "react";
 import AspectRatio from "@mui/joy/AspectRatio";
@@ -21,48 +27,52 @@ import Button from "@mui/joy/Button";
 import {LogoDiscord, LogoReddit, LogoTwitter} from "react-ionicons";
 import CaseDetailsCard from "./CaseDetailsCard";
 
-const rows = [
-    {
-        id: "INV-1234",
-        date: "Feb 3, 2023",
-        status: "Further Action Needed",
-        customer: {
-            image: "O",
-            name: "Olivia Ryhe",
-            email: "olivia@email.com",
-        },
-    },
-    {
-        id: "INV-1233",
-        date: "Feb 3, 2023",
-        status: "Unreviewed",
-        customer: {
-            image: "S",
-            name: "Steve Hampton",
-            email: "steve.hamp@email.com",
-        },
-    },
-    {
-        id: "INV-1232",
-        date: "Feb 3, 2023",
-        status: "Resolved",
-        customer: {
-            image: "C",
-            name: "Ciaran Murray",
-            email: "ciaran.murray@email.com",
-        },
-    },
-];
+import StatusChip from "../StatusChip";
+import Link from "next/link";
+import casePatcher from "@/pages/api/casePatcher";
 
-export default function CaseDetailsModal() {
-    const [selected, setSelected] = React.useState("");
+export default function CaseDetailsModal(props) {
+    const colorScheme = useColorScheme();
     const router = useRouter();
-
+    const data = props.data.cases;
+    var caseObject = null;
+    var query = router.query;
+    const setSnackbarOpen = props.setSnackbarOpen;
     function handleModalClose() {
-        router.push("/");
+        query.caseId = null;
+        router.push(
+            {
+                query,
+            },
+            "/",
+        );
     }
 
     const caseId = router.query.caseId;
+    const discordLogoColor =
+        colorScheme.mode === "dark" ? "#FFFFFF" : "#000000";
+    if (caseId) {
+        caseObject = data.find((row) => row.case_id == caseId);
+    }
+
+    function handleResolveCase() {
+        casePatcher(caseId, "resolve").then(() => {
+            setSnackbarOpen(true);
+            handleModalClose();
+        });
+    }
+    function handleEscalateCase() {
+        casePatcher(caseId, "escalate").then(() => {
+            setSnackbarOpen(true);
+            handleModalClose();
+        });
+    }
+    function handleUnreviewCase() {
+        casePatcher(caseId, "unreview").then(() => {
+            setSnackbarOpen(true);
+            handleModalClose();
+        });
+    }
 
     return (
         <>
@@ -81,17 +91,6 @@ export default function CaseDetailsModal() {
                             size="lg"
                             variant="plain"
                         >
-                            <ModalClose />
-                            <Typography
-                                component="h1"
-                                id="modal-title"
-                                level="title-lg"
-                                textColor="inherit"
-                                fontWeight="lg"
-                                mb={1}
-                            >
-                                Case Details
-                            </Typography>
                             <Stack
                                 direction="row"
                                 spacing={3}
@@ -116,98 +115,139 @@ export default function CaseDetailsModal() {
                                                     alt=""
                                                 />
                                             </AspectRatio>
-                                            <IconButton
-                                                size="md"
-                                                variant="plain"
-                                                disabled
-                                                sx={{
-                                                    bgcolor: "background.body",
-                                                    position: "absolute",
-                                                    zIndex: 2,
-                                                    borderRadius: "50%",
-                                                    left: 100,
-                                                    top: 170,
-                                                    boxShadow: "sm",
-                                                }}
-                                            >
-                                                <LogoDiscord color={"#00000"} />
-                                            </IconButton>
                                         </Stack>
                                         <Stack spacing={3}></Stack>
                                     </Stack>
+                                    <Stack spacing={1.5}>
+                                        <Typography level="title-lg">
+                                            Case Actions
+                                        </Typography>
+                                        <Stack spacing={1}>
+                                            {caseObject.status !=
+                                                "Resolved" && (
+                                                <Button
+                                                    color="success"
+                                                    variant="outlined"
+                                                    onClick={handleResolveCase}
+                                                >
+                                                    Resolve Case
+                                                </Button>
+                                            )}
+                                            {caseObject.status !=
+                                                "Unreviewed" && (
+                                                <Button
+                                                    color="neutral"
+                                                    variant="outlined"
+                                                    onClick={handleUnreviewCase}
+                                                >
+                                                    Mark as Unreviewed
+                                                </Button>
+                                            )}
+                                            {caseObject.status !=
+                                                "Further Action Needed" && (
+                                                <Button
+                                                    color="danger"
+                                                    onClick={handleEscalateCase}
+                                                >
+                                                    Escalate Case
+                                                </Button>
+                                            )}
+                                        </Stack>
+                                        <Divider />
+                                    </Stack>
 
                                     <Stack spacing={2}>
-                                        <Stack>
+                                        <Stack spacing={1}>
+                                            <Typography level="title-md">
+                                                Status
+                                            </Typography>
+                                            <StatusChip
+                                                status={caseObject.status}
+                                            />
+                                        </Stack>
+                                        <Divider />
+                                        <Stack spacing={1}>
                                             <Typography level="title-md">
                                                 Case ID
                                             </Typography>
                                             <Typography>{caseId}</Typography>
                                         </Stack>
                                         <Divider />
-                                        <Stack>
+                                        <Stack spacing={1}>
                                             <Typography level="title-md">
                                                 Name
                                             </Typography>
                                             <Typography>
-                                                {
-                                                    rows.find(
-                                                        (row) =>
-                                                            row.id == caseId,
-                                                    ).customer.name
-                                                }
+                                                {caseObject.offender}
                                             </Typography>
                                         </Stack>
                                         <Divider />
-                                        <Stack>
+                                        <Stack spacing={1}>
                                             <Typography level="title-md">
                                                 Platform
                                             </Typography>
-                                            <Typography>Discord</Typography>
+                                            <Typography>
+                                                {caseObject.platform}
+                                            </Typography>
                                         </Stack>
+                                        <Divider />
                                     </Stack>
-                                    <Divider />
                                 </Stack>
 
-                                <Stack spacing={2} sx={{flexGrow: 1}}>
+                                <Stack
+                                    spacing={2}
+                                    sx={{flexGrow: 1}}
+                                    justifyContent="space-around"
+                                >
                                     <Stack
                                         direction={"row"}
                                         justifyContent={"space-between"}
                                         spacing={2}
                                     >
+                                        <Typography level="h2">
+                                            @{caseObject.offender}
+                                        </Typography>
                                         <Stack
                                             direction={"row"}
                                             spacing={"1vw"}
                                         ></Stack>
-
                                         <Stack
                                             direction={"row"}
                                             spacing={"1vw"}
                                         >
-                                            <Button
-                                                sx={{
-                                                    padding: "10px",
-                                                }}
+                                            <a
+                                                href={caseObject.message_url}
+                                                target="_blank"
                                             >
-                                                <Typography
-                                                    level="title-md"
-                                                    textColor={"white"}
-                                                >
-                                                    Go to original post
-                                                </Typography>
-                                            </Button>
-                                            <Dropdown>
-                                                <MenuButton
-                                                    variant="solid"
-                                                    color="danger"
-                                                    bgcolor="red"
+                                                <Button
+                                                    sx={{
+                                                        padding: "10px",
+                                                    }}
                                                 >
                                                     <Typography
                                                         level="title-md"
                                                         textColor={"white"}
                                                     >
-                                                        Moderation Actions
+                                                        Go to original post
                                                     </Typography>
-                                                </MenuButton>
+                                                </Button>
+                                            </a>
+                                            <Dropdown>
+                                                {caseObject.status.toLowerCase() !==
+                                                    "resolved" && (
+                                                    <MenuButton
+                                                        variant="solid"
+                                                        color="danger"
+                                                        bgcolor="red"
+                                                    >
+                                                        <Typography
+                                                            level="title-md"
+                                                            textColor={"white"}
+                                                        >
+                                                            Moderation Actions
+                                                        </Typography>
+                                                    </MenuButton>
+                                                )}
                                                 <Menu style={{zIndex: 9999}}>
                                                     <MenuItem color="warning">
                                                         Mute User
@@ -219,57 +259,34 @@ export default function CaseDetailsModal() {
                                             </Dropdown>
                                         </Stack>
                                     </Stack>
+                                    <Divider />
                                     <Stack spacing={0}>
                                         <CaseDetailsCard
                                             title={"Flagged Content"}
-                                            content={`                                            
-                                            Lorem ipsum dolor sit amet,
-                                            consectetur adipiscing elit, sed do
-                                            eiusmod tempor incididunt ut labore
-                                            et dolore magna aliqua. Ut enim ad
-                                            minim veniam, quis nostrud
-                                            exercitation ullamco laboris nisi ut
-                                            aliquip ex ea commodo consequat.
-                                            Duis aute irure dolor in
-                                            reprehenderit in voluptate velit
-                                            esse cillum dolore eu fugiat nulla
-                                            pariatur. Excepteur sint occaecat
-                                            cupidatat non proident, sunt in
-                                            culpa qui officia deserunt mollit
-                                            anim id est laborum.`}
+                                            content={caseObject.message}
                                         />
                                     </Stack>
                                     <Stack spacing={0}>
-                                        <CaseDetailsCard
-                                            title={
-                                                "Context - Content is a reply"
-                                            }
-                                            content={`Lorem ipsum dolor sit amet,
-                                            consectetur adipiscing elit, sed do
-                                            eiusmod tempor incididunt ut labore
-                                            et dolore magna aliqua. Ut enim ad
-                                            minim veniam, quis nostrud
-                                            exercitation ullamco laboris nisi ut
-                                            aliquip ex ea commodo consequat.`}
-                                        />
+                                        {caseObject.context && (
+                                            <CaseDetailsCard
+                                                title={
+                                                    "Context - Content is a reply"
+                                                }
+                                                content={caseObject.context}
+                                            />
+                                        )}
                                     </Stack>
                                     <Stack spacing={0}>
                                         <CaseDetailsCard
                                             title={"AI Comment"}
-                                            content={`Lorem ipsum dolor sit amet,
-                                            consectetur adipiscing elit, sed do
-                                            eiusmod tempor incididunt ut labore
-                                            et dolore magna aliqua. Ut enim ad
-                                            minim veniam, quis nostrud
-                                            exercitation ullamco laboris nisi ut
-                                            aliquip ex ea commodo consequat.`}
+                                            content={caseObject.ai_comment}
                                         />
                                     </Stack>
                                     <div>
                                         <CaseDetailsCard>
                                             <Stack spacing={1}>
                                                 <Typography level="title-md">
-                                                    AI Flags
+                                                    AI Tags
                                                 </Typography>
 
                                                 <Box>
@@ -281,27 +298,21 @@ export default function CaseDetailsModal() {
                                                             gap: 1,
                                                         }}
                                                     >
-                                                        {[
-                                                            "Promotes Terrorism",
-                                                            "Offensive Content",
-                                                            "Discriminatory",
-                                                            "Harmful Content",
-                                                            "Unsafe",
-                                                            "Potentially Unsafe",
-                                                            "Potentially Discriminatory",
-                                                            "Potentially Offensive",
-                                                            "Potentially Harmful",
-                                                        ].map((name) => {
-                                                            return (
-                                                                <Chip
-                                                                    key={name}
-                                                                    color="neutral"
-                                                                    variant="outlined"
-                                                                >
-                                                                    {name}
-                                                                </Chip>
-                                                            );
-                                                        })}
+                                                        {caseObject.ai_tags.map(
+                                                            (name) => {
+                                                                return (
+                                                                    <Chip
+                                                                        key={
+                                                                            name
+                                                                        }
+                                                                        color="neutral"
+                                                                        variant="outlined"
+                                                                    >
+                                                                        {name}
+                                                                    </Chip>
+                                                                );
+                                                            },
+                                                        )}
                                                     </Box>
                                                 </Box>
                                             </Stack>
