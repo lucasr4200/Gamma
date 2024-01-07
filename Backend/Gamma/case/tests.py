@@ -9,18 +9,12 @@ from django.test import TestCase
 class CaseModelTest(TestCase):
     @classmethod
     def setUpTestData(cls):
-        Case.objects.create(description='a case',
-                            status='Resolved',
+        Case.objects.create(status='Resolved',
                             date = datetime.date.today(),
                             platform='Facebook',
                             offender='offender',
                             message='message',
                             context='context')
-
-    def test_description_content(self):
-        case = Case.objects.get(case_id=1)
-        expected_object_name = f'{case.description}'
-        self.assertEquals(expected_object_name, 'a case')
     
     def test_status_content(self):
         case = Case.objects.get(case_id=1)
@@ -57,8 +51,7 @@ class CaseModelTest(TestCase):
 class CaseTest(APITestCase):
     @classmethod
     def setUpTestData(cls):
-        Case.objects.create(description='a case',
-                            status='Resolved',
+        Case.objects.create(status='Resolved',
                             date = datetime.date.today(),
                             platform='Facebook',
                             offender='offender',
@@ -81,8 +74,7 @@ class CaseTest(APITestCase):
 
     def test_post_case(self):
         url = reverse('cases')
-        data = {'description': 'Hello, world!',
-                'status': 'Resolved',
+        data = {'status': 'Resolved',
                 'date': str(datetime.date.today()),
                 'platform': 'Facebook',
                 'offender': 'offender',
@@ -95,8 +87,7 @@ class CaseTest(APITestCase):
 
     def test_post_bad_status_case(self):
         url = reverse('cases')
-        data = {'description': 'Hello, world!',
-                'status': 'bad status',
+        data = {'status': 'bad status',
                 'date': str(datetime.date.today()),
                 'platform': 'Facebook',
                 'offender': 'offender',
@@ -109,8 +100,7 @@ class CaseTest(APITestCase):
     
     def test_post_bad_platform_case(self):
         url = reverse('cases')
-        data = {'description': 'Hello, world!',
-                'status': 'Resolved',
+        data = {'status': 'Resolved',
                 'date': str(datetime.date.today()),
                 'platform': 'bad platform',
                 'offender': 'offender',

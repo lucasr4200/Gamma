@@ -35,11 +35,10 @@ class CasesView(APIView):
         if case.is_valid():
             case.save()
         else:
-            return Response(case.errors, status=400)
+            return Response(json.dumps(case.errors), status=400)
         
-        return Response(case.data, status=201)
+        return Response(json.dumps(case.data), status=201)
                 
-
     
 
 class CaseView(APIView):
@@ -47,7 +46,7 @@ class CaseView(APIView):
         case = Case.objects.get(case_id=case_id)
         response = CaseSerializer(case).data
         #print(response)
-        return Response(response, status=200)
+        return Response(json.dumps(response), status=200)
     
     def delete(self, request, case_id):
         case = Case.objects.get(case_id=case_id)
