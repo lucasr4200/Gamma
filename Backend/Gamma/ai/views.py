@@ -22,7 +22,6 @@ class ChatView(APIView):
         data = json.loads(request.body)
         message = data['message']
         user = data['user']
-        timestamp = data['timestamp']
         source = data['source']
         platform = data['platform']
         try:
