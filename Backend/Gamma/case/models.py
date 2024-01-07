@@ -6,7 +6,7 @@ from django.db import models
 
 class Case(models.Model):
     case_id = models.AutoField(primary_key=True)
-    date = models.DateField()
+    date = models.DateTimeField()
     status = models.CharField(max_length=50)
     platform = models.CharField(max_length=20)
     offender = models.CharField(max_length=100)
