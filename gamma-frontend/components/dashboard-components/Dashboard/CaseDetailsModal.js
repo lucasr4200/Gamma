@@ -218,10 +218,12 @@ export default function CaseDetailsModal(props) {
                                             <a
                                                 href={caseObject.message_url}
                                                 target="_blank"
+                                                
                                             >
                                                 <Button
                                                     sx={{
                                                         padding: "10px",
+                                                        width: "100%",
                                                     }}
                                                 >
                                                     <Typography

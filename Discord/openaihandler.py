@@ -3,7 +3,7 @@ import os
 
 # token = os.environ['OPENAI_API_KEY']
 
-client = OpenAI(api_key="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")
+client = OpenAI(api_key="")
 
 #Prompt in prompt.txt
 prompt = open("prompt.txt", "r").read()

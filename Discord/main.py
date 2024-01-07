@@ -41,4 +41,4 @@ async def on_message(message):
 
 
 # token = os.environ['DISCORD_TOKEN']
-client.run("MTE5MzU0MTA0ODIwNzY3OTU5OA.GZ2ya0.uEfdEfYSqwqgVTYwc9iQMAbTcITA1K4d3-PhWc")
+client.run("")
