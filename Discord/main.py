@@ -18,7 +18,6 @@ async def on_message(message):
 
     data = {'message': message.content,
             'user': str(message.author),
-            'timestamp': str(message.created_at),
             'source': message.jump_url,
             'platform': 'discord'}
 
@@ -35,10 +34,15 @@ async def on_message(message):
     print("tagsList:", tagsList)
 
 
-    tagsList.append(json.loads(response.json()['message'])['AI Comment'])
+    # tagsList.append(json.loads(response.json()['message'])['AI Comment'])
+
+    aiCommentList = []
+    aiCommentList.append(json.loads(response.json()['message'])['AI Comment'])
+
 
     dataList = []
     dataList.append(tagsList)
+    dataList.append(aiCommentList)
 
     for i in data:
         dataList.append(data[i])

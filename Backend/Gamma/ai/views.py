@@ -25,7 +25,7 @@ class ChatView(APIView):
         message = data['message']  # String
         user = data['user']  # String
         source = data['source']     # String
-        platform = data['platform']    # String
+        platform = data['platform']
         try:
             chat_completion = client.chat.completions.create(
                 messages=[
