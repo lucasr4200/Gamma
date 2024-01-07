@@ -11,6 +11,7 @@ class Case(models.Model):
     platform = models.CharField(max_length=20)
     offender = models.CharField(max_length=100)
     message = models.TextField()
+    message_url = models.URLField()
     context = models.TextField()
     ai_comment = models.TextField(default="N/A")
     ai_tags = models.JSONField(default=list)

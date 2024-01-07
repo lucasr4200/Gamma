@@ -14,6 +14,7 @@ class CaseModelTest(TestCase):
                             platform='Facebook',
                             offender='offender',
                             message='message',
+                            message_url='message_url',
                             context='context')
     
     def test_status_content(self):
@@ -56,6 +57,7 @@ class CaseTest(APITestCase):
                             platform='Facebook',
                             offender='offender',
                             message='message',
+                            message_url='message_url',
                             context='context')
 
     def test_get_cases(self):
@@ -79,6 +81,7 @@ class CaseTest(APITestCase):
                 'platform': 'Facebook',
                 'offender': 'offender',
                 'message': 'message',
+                'message_url': 'message_url',
                 'context': 'context'}
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
@@ -92,6 +95,7 @@ class CaseTest(APITestCase):
                 'platform': 'Facebook',
                 'offender': 'offender',
                 'message': 'message',
+                'message_url': 'message_url',
                 'context': 'context'}
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
@@ -105,6 +109,7 @@ class CaseTest(APITestCase):
                 'platform': 'bad platform',
                 'offender': 'offender',
                 'message': 'message',
+                'message_url': 'message_url',
                 'context': 'context'}
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
