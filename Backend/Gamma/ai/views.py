@@ -21,16 +21,20 @@ class ChatView(APIView):
     def post(self, request):
         data = json.loads(request.body)
         message = data['message']
+        user = data['user']
+        timestamp = data['timestamp']
+        source = data['source']
+        platform = data['platform']
         try:
             chat_completion = client.chat.completions.create(
                 messages=[
                     {
                         "role": "system",
-                        "content": "You are an AI that flags content based on tags like \"Harmful Content\" \"Potentially Unsafe\" \"Misleading\" \"Potentially Misleading\" \"Discriminatory\" \"Promoting Self Harm\" \"Hate Speech\" \"Mean Spirited\".  Return results as {\"tags\":[tags], , \"AI Comment\":ai_comment} "
+                        "content": "You are an AI that flags content based on tags like \"Harmful Content\" \"Potentially Unsafe\" \"Misleading\" \"Safe\" \"Potentially Misleading\" \"Discriminatory\" \"Promoting Self Harm\" \"Hate Speech\" \"Mean Spirited\".  Return results as {\"tags\":[tags], , \"AI Comment\":ai_comment} . AI comment is an explanation about why the tags were applied to a message"
                     },
                     {
                         "role": "user",
-                        "content": message
+                        "content": user+":"+message
                     }
                 ],
                 model="gpt-3.5-turbo",
@@ -41,7 +45,7 @@ class ChatView(APIView):
                 presence_penalty=0,
             )
             response_messages = chat_completion.choices[0].message.content
-            print(response_messages)
+            # print(response_messages)
             return Response({"message":response_messages})
 
         except Exception as e:
@@ -49,4 +53,3 @@ class ChatView(APIView):
             return Response("OpenAI can't be reached right now. Please try again later.")
 
 
-#     Response(chat_completion)
