@@ -6,6 +6,7 @@ import os
 from dotenv import load_dotenv
 load_dotenv()
 import requests
+from case.models import Case
 #from __init__ import client
 
 # Create your views here.
@@ -48,6 +49,19 @@ class ChatView(APIView):
             # print(response_messages)
 
             # Save case object to db
+            caseobject = Case.objects.create(
+                date=timestamp,
+                status="Unreviewed",
+                platform=platform,
+                offender=user,
+                message=message,
+                message_url=source,
+                context="",
+                ai_comment=response_messages,   #fix so that it is the ai comment only
+                ai_tags=[]  #get the tags from the response_messages
+            )
+
+            caseobject.save()
 
 
             #finally return response
