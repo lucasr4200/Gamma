@@ -3,7 +3,6 @@ import os
 import requests
 import json
 
-
 client = discord.Client(intents=discord.Intents.all())
 
 open_ai_key = os.environ.get('OPENAI_API_KEY')
@@ -19,38 +18,38 @@ async def on_message(message):
 
     data = {'message': message.content,
             'user': str(message.author),
-            'timestamp': str(message.created_at),
             'source': message.jump_url,
             'platform': 'discord'}
 
     print(data)
 
     headers = {'Content-type': 'application/json'}
-    response = requests.post('http://127.0.0.1:8000/api/ai', json=data, headers=headers)
+    response = requests.post('http://192.168.1.242:8000/api/ai', json=data, headers=headers)
 
-#http://127.0.0.1:8000/api/ai used for local host
+    #http://127.0.0.1:8000/api/ai used for local host
 
-    x = []
+    tagsList = []
     for i in json.loads(response.json()['message'])['tags']:
-        x.append(i)
-    print("x:", x)
+        tagsList.append(i)
+    print("tagsList:", tagsList)
 
 
-    x.append(json.loads(response.json()['message'])['AI Comment'])
+    # tagsList.append(json.loads(response.json()['message'])['AI Comment'])
+
+    aiCommentList = []
+    aiCommentList.append(json.loads(response.json()['message'])['AI Comment'])
 
 
-    z = []
-    z.append(x)
-    # z.append(y)
+    dataList = []
+    dataList.append(tagsList)
+    dataList.append(aiCommentList)
+
     for i in data:
-        z.append(data[i])
+        dataList.append(data[i])
 
-
-    print("z:", z)
+    print("dataList:", dataList)
 
     await message.channel.send(json.loads(response.json()['message'])['tags'])
-    # await message.channel.send(response.json()['message'])
-
 
 token = os.environ.get('DISCORD_TOKEN')
 client.run(token)
