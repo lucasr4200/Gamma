@@ -9,11 +9,11 @@ import requests
 #from __init__ import client
 
 # Create your views here.
-token = os.environ.get('OPENAI_API_KEY')
-print(token)
+# token = os.environ.get('OPENAI_API_KEY')
+# print(token)
 client = OpenAI(
     # This is the default and can be omitted
-    api_key= token,
+    api_key= "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",
 )
 
 class ChatView(APIView):
